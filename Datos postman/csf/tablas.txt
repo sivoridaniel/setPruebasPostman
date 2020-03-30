@@ -1,0 +1,3 @@
+Nombre Tabla FACON, Nombre Empresa, Codigo empresa, Id Modalidad, Campo Busqueda Factura
+FACTURAS_00662_000, MET MEDICINA PRIVADA, 662, 0812030936yyMIqzzhyZ, CBF
+FACTURAS_00043_000, OSDE, 571, 28489867883600003001, CBF
