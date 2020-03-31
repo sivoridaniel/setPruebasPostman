@@ -3,10 +3,10 @@
  "searchString":"METROGAS 20/02",
  "paymentModeId":"28697970981400003538",
  "companyCode":"329",
- "referenceBill":"00 0066",
- "form": {"CBF":"206411040008"},
+ "referenceBill":"00 6154",
+ "form": {"CBF":"10063190300"},
  "currency":"DEB",
- "date":"2017-05-11",
- "localTime":"2017-05-11T14:20:00.297Z",
+ "date":"2020-01-01",
+ "localTime":"2020-01-01T14:20:00.297Z",
  "expirationNumber":1
 }]
