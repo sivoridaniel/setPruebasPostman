@@ -1,0 +1,12 @@
+[{
+ "branchId":"0812030929fGYNAIfbdj",
+ "searchString":"MERCADO LIBRE / MERCADO PAGO",
+ "paymentModeId":"56865811087400000127",
+ "amount":278,
+ "companyCode":"652",
+ "form": {"C11":"1001234002","C12":"1","C13":"05025789"},
+ "currency":"DEB",
+ "date":"2010-01-01",
+ "localTime":"2010-01-01T14:20:00.297Z",
+ "expirationNumber":1
+}]
