@@ -1,4 +1,17 @@
-[{
+[
+{
+ "branchId":"0812030929fGYNAIfbdj",
+ "searchString":"METROGAS 20/02",
+ "paymentModeId":"28697970981400003538",
+ "companyCode":"329",
+ "referenceBill":"00 0066",
+ "form": {"CBF":"20641104000"},
+ "currency":"DEB",
+ "date":"2020-01-01",
+ "localTime":"2020-01-01T14:20:00.297Z",
+ "expirationNumber":1
+},
+{
  "branchId":"0812030929fGYNAIfbdj",
  "searchString":"METROGAS 20/02",
  "paymentModeId":"28697970981400003538",
