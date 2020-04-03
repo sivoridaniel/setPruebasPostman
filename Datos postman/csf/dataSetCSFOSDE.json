@@ -3,7 +3,7 @@
  "searchString":"OSDE",
  "paymentModeId":"28489867883600003001",
  "companyCode":"571",
- "form": {"CBF":"022222132"},
+ "form": {"CBF":"625352911"},
  "currency":"DEB",
  "date":"2010-05-11",
  "localTime":"2019-05-11T14:20:00.297Z",
@@ -11,13 +11,12 @@
 },
 {
  "branchId":"0812030929fGYNAIfbdj",
- "searchString":"MET MEDICINA PRIVADA",
- "paymentModeId":"0812030936yyMIqzzhyZ",
- "companyCode":"662",
- "form": {"CBF":"000000000000026188861"},
+ "searchString":"OSDE",
+ "paymentModeId":"28489867883600003001",
+ "companyCode":"571",
+ "form": {"CBF":"625903730"},
  "currency":"DEB",
  "date":"2010-05-11",
  "localTime":"2019-05-11T14:20:00.297Z",
  "expirationNumber":1
-}
-]
+}]

@@ -1,0 +1,13 @@
+[{
+ "branchId":"0812030929fGYNAIfbdj",
+ "searchString":"IMPLE TEST FB",
+ "paymentModeId":"61504606704600000391",
+ "amount":500,
+ "companyCode":"8082",
+ "form": {"C01":"0000000000003723633"},
+ "referenceBill":"27186828200002000000",
+ "currency":"DEB",
+ "date":"2019-03-25",
+ "localTime":"2019-03-25T14:20:00.297Z",
+ "expirationNumber":1
+}]
