@@ -1,0 +1,386 @@
+openapi: 3.0.1
+info:
+  title: payment-hub
+  description: Spring Boot REST API Example
+  license:
+    name: Apache 2.0
+    url: http://springdoc.org
+  version: 0.1.0-SNAPSHOT
+servers:
+- url: http://payment-hub-debit-hub-dev.apps.ocp.term.gire.ent
+  description: Generated server url
+paths:
+  "/payment-hub-api/v0/config/{businessUnit}/{companyId}":
+    get:
+      tags:
+      - Payments API
+      summary: Company configuration
+      description: Obtain the configuration of the given company
+      operationId: getCompanyConfig
+      parameters:
+      - name: businessUnit
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: companyId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/CompanyConfigPHResponse"
+        '500':
+          description: Internal Server Error
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/CompanyConfigPHResponse"
+  "/payment-hub-api/v0/reverses":
+    post:
+      tags:
+      - Payments API
+      summary: Post reverse
+      description: Executes the reverse of an operation invoking the corresponding
+        gateway
+      operationId: reverses
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/PaymentHubReverseRequest"
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/PaymentHubReverseResponse"
+        '500':
+          description: Internal Server Error
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/PaymentHubReverseResponse"
+  "/payment-hub-api/v0/operations/{operationId}":
+    put:
+      tags:
+      - Payments API
+      summary: Update status
+      description: Update status of an operation in MongoDB
+      operationId: updateOperationStatus
+      parameters:
+      - name: operationId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                type: string
+        '500':
+          description: Internal Server Error
+          content:
+            "*/*":
+              schema:
+                type: string
+  "/payment-hub-api/v0/payments":
+    post:
+      tags:
+      - Payments API
+      summary: Post payment
+      description: Process a payment
+      operationId: pay
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/PaymentHubRequest"
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/PaymentHubResponse"
+        '400':
+          description: Bad Request
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/PaymentHubResponse"
+        '405':
+          description: Method not found
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/PaymentHubResponse"
+        '500':
+          description: Internal Server Error
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/PaymentHubResponse"
+  "/payment-hub-api/v0/bines/{bin}":
+    post:
+      tags:
+      - Payments API
+      summary: Card Bin validation
+      description: Returns the card information if the bin is valid and saves this
+        info in Mongo
+      operationId: validateBin
+      parameters:
+      - name: bin
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/BinPHResponse"
+        '500':
+          description: Internal Server Error
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/BinPHResponse"
+components:
+  schemas:
+    GireApiError:
+      type: object
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+        path:
+          type: string
+        description:
+          type: string
+        errors:
+          type: array
+          items:
+            "$ref": "#/components/schemas/InternalError"
+    InternalError:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    CompanyConfigPHResponse:
+      type: object
+      properties:
+        colors:
+          type: array
+          items:
+            type: string
+        degraded:
+          type: boolean
+        logo:
+          type: string
+        urlHome:
+          type: string
+    PaymentHubReverseRequest:
+      required:
+      - amount
+      - ip
+      - operationId
+      type: object
+      properties:
+        ip:
+          type: string
+        operationId:
+          type: string
+        amount:
+          type: number
+          format: double
+    PaymentHubReverseResponse:
+      type: object
+      properties:
+        operationId:
+          type: string
+        status:
+          type: string
+          enum:
+          - NEW
+          - TO_PAY
+          - SUCCESS
+          - NOT_APPROVED
+          - TIMED_OUT
+          - GATEWAY_ERROR
+          - UNEXPECTED_ERROR
+          - INVALID_GATEWAY
+          - FRAUD_RISK
+          - REVERSED
+          - REVERSE_FAILED
+          - REVERSE_INVALID_REQUEST
+        responseMsg:
+          type: string
+        authCode:
+          type: string
+    PaymentHubRequest:
+      required:
+      - amount
+      - branchId
+      - cardExpirationDate
+      - cardHolderLastName
+      - cardHolderName
+      - cardId
+      - cardSecurityCode
+      - cardType
+      - clientIp
+      - companyCuit
+      - companyName
+      - currency
+      - dni
+      - operationId
+      type: object
+      properties:
+        cardId:
+          type: string
+        cardHolderName:
+          type: string
+        cardHolderLastName:
+          type: string
+        cardExpirationDate:
+          type: string
+        cardSecurityCode:
+          type: string
+        cardType:
+          type: string
+        cardBin:
+          type: string
+        currency:
+          type: string
+        amount:
+          type: number
+          format: double
+        mail:
+          type: string
+        dni:
+          type: string
+        branchId:
+          type: string
+        clientIp:
+          type: string
+        sendNotifications:
+          type: boolean
+        organization:
+          type: string
+        companyName:
+          type: string
+        companyCuit:
+          type: string
+        operationId:
+          type: string
+        paymentModeId:
+          type: string
+        province:
+          type: string
+        sessionId:
+          type: string
+        companyCode:
+          type: string
+        clientId:
+          type: string
+        barcode:
+          type: string
+        type:
+          type: string
+        agentId:
+          type: string
+        agentCode:
+          type: string
+        branchCode:
+          type: string
+        searchKey:
+          type: string
+        prepaidType:
+          type: string
+        xcoordsLatitude:
+          type: number
+        xcoordsLongitude:
+          type: number
+    GatewayResponse:
+      type: object
+      properties:
+        operationId:
+          type: string
+        status:
+          type: string
+        responseMsg:
+          type: string
+        lastDigitsPan:
+          type: string
+        transactionDate:
+          type: string
+    PaymentHubResponse:
+      type: object
+      properties:
+        gateway:
+          type: string
+          enum:
+          - PEI
+          - CASH
+          - INGENICO
+        operationId:
+          type: string
+        status:
+          type: string
+          enum:
+          - NEW
+          - TO_PAY
+          - SUCCESS
+          - NOT_APPROVED
+          - TIMED_OUT
+          - GATEWAY_ERROR
+          - UNEXPECTED_ERROR
+          - INVALID_GATEWAY
+          - FRAUD_RISK
+          - REVERSED
+          - REVERSE_FAILED
+          - REVERSE_INVALID_REQUEST
+        currency:
+          type: string
+        amount:
+          type: number
+          format: double
+        paymentRequest:
+          "$ref": "#/components/schemas/PaymentHubRequest"
+        gatewayResponse:
+          "$ref": "#/components/schemas/GatewayResponse"
+    BinPHResponse:
+      type: object
+      properties:
+        nombre:
+          type: string
+        tipo:
+          type: string
+        codEntidad:
+          type: string
+        logoTarjeta:
+          type: string
